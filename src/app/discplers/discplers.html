@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="page-header">
+    <h2>Our Disciplers</h2>
+    <p class="subtitle">Click on a discipler to view their messages</p>
+  </div>
+  
+  <div class="disciplers-grid">
+    @for (discipler of disciplers(); track discipler.id) {
+      <div class="discipler-card">
+        <div class="discipler-header">
+          <div class="discipler-avatar">
+            @if (discipler.avatar) {
+              <img [src]="discipler.avatar" [alt]="discipler.name" />
+            } @else {
+              {{ getInitials(discipler.name) }}
+            }
+          </div>
+          <div class="discipler-info">
+            <h3>{{ discipler.name }}</h3>
+            <p class="discipler-email">{{ discipler.email }}</p>
+            <p class="discipler-phone">{{ discipler.phone }}</p>
+          </div>
+        </div>
+        
+        <div class="messages-dropdown" [class.open]="openDropdown() === discipler.id">
+          <button class="dropdown-toggle" (click)="toggleDropdown(discipler.id)" [attr.aria-expanded]="openDropdown() === discipler.id">
+            <span>Messages</span>
+            <span class="arrow">{{ openDropdown() === discipler.id ? '▲' : '▼' }}</span>
+          </button>
+          
+          @if (openDropdown() === discipler.id) {
+            <div class="dropdown-menu">
+              @for (message of getMessagesForDiscipler(discipler.id); track message.id) {
+                <a class="dropdown-item" [routerLink]="['/messages', message.id]">
+                  <div class="message-preview">
+                    <span class="message-title">{{ message.title }}</span>
+                    <span class="message-date">{{ message.date | date:'MMM d, y' }}</span>
+                  </div>
+                </a>
+              } @empty {
+                <div class="dropdown-empty">No messages yet</div>
+              }
+              <a class="dropdown-item view-all" routerLink="/messages" [queryParams]="{discipler: discipler.name}">
+                View All Messages
+              </a>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

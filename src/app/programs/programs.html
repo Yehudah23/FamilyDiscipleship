@@ -1,0 +1,143 @@
+<section class="programs">
+  <div class="programs-hero">
+    <div class="container">
+      <div class="section-header centered">
+        <span class="section-badge">Upcoming Programs</span>
+        <h1>Join Our Community Events</h1>
+        <p class="section-subtitle">From weekly Bible studies to special conferences, there's a place for every family member to grow in faith</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="programs-content">
+    <div class="container">
+      <div class="filter-tabs">
+        <button 
+          class="filter-tab" 
+          [class.active]="filter() === 'all'" 
+          (click)="setFilter('all')">
+          All Programs
+        </button>
+        <button 
+          class="filter-tab" 
+          [class.active]="filter() === 'weekly'" 
+          (click)="setFilter('weekly')">
+          Weekly
+        </button>
+        <button 
+          class="filter-tab" 
+          [class.active]="filter() === 'monthly'" 
+          (click)="setFilter('monthly')">
+          Monthly
+        </button>
+        <button 
+          class="filter-tab" 
+          [class.active]="filter() === 'special'" 
+          (click)="setFilter('special')">
+          Special Events
+        </button>
+        <button 
+          class="filter-tab" 
+          [class.active]="filter() === 'youth'" 
+          (click)="setFilter('youth')">
+          Youth
+        </button>
+      </div>
+
+      <div class="programs-grid">
+        @for (program of filteredPrograms(); track program.id) {
+          <article class="program-card">
+            <div class="program-header">
+              <span class="program-type" 
+                [class.weekly]="program.type === 'weekly'"
+                [class.monthly]="program.type === 'monthly'"
+                [class.special]="program.type === 'special'"
+                [class.youth]="program.type === 'youth'">
+                {{ getTypeLabel(program.type) }}
+              </span>
+              <div class="program-date">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                <span>{{ formatDate(program.date) }}</span>
+              </div>
+            </div>
+            
+            <div class="program-body">
+              <h3 class="program-title">{{ program.title }}</h3>
+              <p class="program-description">{{ program.description }}</p>
+              
+              <div class="program-meta">
+                <div class="meta-item">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                  <span>{{ program.time }}</span>
+                </div>
+                <div class="meta-item">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                  </svg>
+                  <span>{{ program.location }}</span>
+                </div>
+                <div class="meta-item">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                  </svg>
+                  <span>{{ program.leader }}</span>
+                </div>
+              </div>
+              
+              @if (program.capacity && program.registered !== undefined) {
+                <div class="program-progress">
+                  <div class="progress-header">
+                    <span>Availability</span>
+                    <span>{{ program.registered }} / {{ program.capacity }} registered</span>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-fill" [style.width.%]="getProgress(program)"></div>
+                  </div>
+                </div>
+              }
+            </div>
+            
+            <div class="program-footer">
+              <button class="btn btn-outline">Learn More</button>
+              <button class="btn btn-primary">Register</button>
+            </div>
+          </article>
+        } @empty {
+          <div class="no-programs">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            <h3>No programs found</h3>
+            <p>Try selecting a different category or check back later for upcoming events.</p>
+          </div>
+        }
+      </div>
+
+      <div class="programs-cta">
+        <div class="cta-card">
+          <div class="cta-content">
+            <h2>Want to Stay Updated?</h2>
+            <p>Subscribe to our newsletter to receive program announcements, registration reminders, and spiritual encouragement straight to your inbox.</p>
+          </div>
+          <form class="cta-form" (submit)="false">
+            <input type="email" placeholder="Enter your email" required>
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

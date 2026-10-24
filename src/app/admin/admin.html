@@ -1,0 +1,221 @@
+<div class="container">
+  <h2>Admin Panel</h2>
+  
+  <div class="admin-tabs">
+    <button class="tab-btn" [class.active]="activeTab() === 'messages'" (click)="activeTab.set('messages')">Manage Messages</button>
+    <button class="tab-btn" [class.active]="activeTab() === 'blogs'" (click)="activeTab.set('blogs')">Manage Blogs</button>
+    <button class="tab-btn" [class.active]="activeTab() === 'disciplers'" (click)="activeTab.set('disciplers')">Manage Disciplers</button>
+  </div>
+  
+  @if (activeTab() === 'messages') {
+    <div class="admin-section">
+      <div class="section-header">
+        <h3>Messages Management</h3>
+        <button class="btn btn-primary" (click)="showMessageForm.set(true)">{{ editingMessage() ? 'Cancel Edit' : 'Add New Message' }}</button>
+      </div>
+      
+      @if (showMessageForm()) {
+        <div class="admin-form">
+          <h4>{{ editingMessage() ? 'Edit Message' : 'Add New Message' }}</h4>
+          <form (ngSubmit)="onAddMessage()" #messageForm="ngForm">
+            <div class="form-group">
+              <label>Discipler *</label>
+              <select [(ngModel)]="messageFormModel.disciplerId" name="disciplerId" required>
+                <option value="">Select Discipler</option>
+                @for (d of disciplers(); track d.id) {
+                  <option [value]="d.id">{{ d.name }}</option>
+                }
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Title *</label>
+              <input type="text" [(ngModel)]="messageFormModel.title" name="title" required placeholder="Message title">
+            </div>
+            <div class="form-group">
+              <label>Content *</label>
+              <textarea [(ngModel)]="messageFormModel.content" name="content" required rows="5" placeholder="Message content"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Date</label>
+              <input type="date" [(ngModel)]="messageFormModel.date" name="date">
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" [disabled]="!messageForm.valid">
+                {{ editingMessage() ? 'Update Message' : 'Add Message' }}
+              </button>
+              <button type="button" class="btn btn-secondary" (click)="cancelMessageEdit()">Cancel</button>
+            </div>
+          </form>
+        </div>
+      }
+      
+      <div class="messages-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Discipler</th>
+              <th>Title</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (message of messages(); track message.id) {
+              <tr>
+                <td>{{ message.disciplerName }}</td>
+                <td>{{ message.title }}</td>
+                <td>{{ message.date | date:'MMM d, y' }}</td>
+                <td class="actions">
+                  <button class="btn btn-sm btn-edit" (click)="editMessage(message)">Edit</button>
+                  <button class="btn btn-sm btn-delete" (click)="deleteMessage(message.id)">Delete</button>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="4" class="empty-state">No messages yet. Click "Add New Message" to create one.</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+  
+  @if (activeTab() === 'blogs') {
+    <div class="admin-section">
+      <div class="section-header">
+        <h3>Blogs Management</h3>
+        <button class="btn btn-primary" (click)="showBlogForm.set(true)">{{ editingBlog() ? 'Cancel Edit' : 'Add New Blog' }}</button>
+      </div>
+      
+      @if (showBlogForm()) {
+        <div class="admin-form">
+          <h4>{{ editingBlog() ? 'Edit Blog' : 'Add New Blog' }}</h4>
+          <form (ngSubmit)="onAddBlog()" #blogForm="ngForm">
+            <div class="form-group">
+              <label>Title *</label>
+              <input type="text" [(ngModel)]="blogFormModel.title" name="title" required placeholder="Blog title">
+            </div>
+            <div class="form-group">
+              <label>Content *</label>
+              <textarea [(ngModel)]="blogFormModel.content" name="content" required rows="6" placeholder="Blog content"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Author *</label>
+              <input type="text" [(ngModel)]="blogFormModel.author" name="author" required placeholder="Author name">
+            </div>
+            <div class="form-group">
+              <label>Date</label>
+              <input type="date" [(ngModel)]="blogFormModel.date" name="date">
+            </div>
+            <div class="form-group">
+              <label>Image URL (optional)</label>
+              <input type="text" [(ngModel)]="blogFormModel.imageUrl" name="imageUrl" placeholder="https://example.com/image.jpg">
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" [disabled]="!blogForm.valid">
+                {{ editingBlog() ? 'Update Blog' : 'Add Blog' }}
+              </button>
+              <button type="button" class="btn btn-secondary" (click)="cancelBlogEdit()">Cancel</button>
+            </div>
+          </form>
+        </div>
+      }
+      
+      <div class="blogs-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (blog of blogs(); track blog.id) {
+              <tr>
+                <td>{{ blog.title }}</td>
+                <td>{{ blog.author }}</td>
+                <td>{{ blog.date | date:'MMM d, y' }}</td>
+                <td class="actions">
+                  <button class="btn btn-sm btn-edit" (click)="editBlog(blog)">Edit</button>
+                  <button class="btn btn-sm btn-delete" (click)="deleteBlog(blog.id)">Delete</button>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="4" class="empty-state">No blogs yet. Click "Add New Blog" to create one.</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+  
+  @if (activeTab() === 'disciplers') {
+    <div class="admin-section">
+      <div class="section-header">
+        <h3>Disciplers Management</h3>
+        <button class="btn btn-primary" (click)="showDisciplerForm.set(true)">{{ editingDiscipler() ? 'Cancel Edit' : 'Add New Discipler' }}</button>
+      </div>
+      
+      @if (showDisciplerForm()) {
+        <div class="admin-form">
+          <h4>{{ editingDiscipler() ? 'Edit Discipler' : 'Add New Discipler' }}</h4>
+          <form (ngSubmit)="onAddDiscipler()" #disciplerForm="ngForm">
+            <div class="form-group">
+              <label>Name *</label>
+              <input type="text" [(ngModel)]="disciplerFormModel.name" name="name" required placeholder="Full name">
+            </div>
+            <div class="form-group">
+              <label>Email *</label>
+              <input type="email" [(ngModel)]="disciplerFormModel.email" name="email" required placeholder="email@example.com">
+            </div>
+            <div class="form-group">
+              <label>Phone *</label>
+              <input type="text" [(ngModel)]="disciplerFormModel.phone" name="phone" required placeholder="+234-800-000-0000">
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" [disabled]="!disciplerForm.valid">
+                {{ editingDiscipler() ? 'Update Discipler' : 'Add Discipler' }}
+              </button>
+              <button type="button" class="btn btn-secondary" (click)="cancelDisciplerEdit()">Cancel</button>
+            </div>
+          </form>
+        </div>
+      }
+      
+      <div class="disciplers-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (discipler of disciplers(); track discipler.id) {
+              <tr>
+                <td>{{ discipler.name }}</td>
+                <td>{{ discipler.email }}</td>
+                <td>{{ discipler.phone }}</td>
+                <td class="actions">
+                  <button class="btn btn-sm btn-edit" (click)="editDiscipler(discipler)">Edit</button>
+                  <button class="btn btn-sm btn-delete" (click)="deleteDiscipler(discipler.id)">Delete</button>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="4" class="empty-state">No disciplers yet. Click "Add New Discipler" to create one.</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+</div>

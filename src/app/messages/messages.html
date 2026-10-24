@@ -1,0 +1,89 @@
+<div class="container">
+  <div class="page-header">
+    <h2>Messages</h2>
+    <p class="subtitle">Browse messages from our disciplers</p>
+  </div>
+  
+  <div class="messages-layout">
+    <aside class="sidebar">
+      <div class="filter-section">
+        <h3>Filter by Discipler</h3>
+        <button class="filter-btn" [class.active]="!selectedDiscipler()" (click)="clearFilter()">
+          <span class="filter-btn-icon">📋</span>
+          All Messages
+        </button>
+        @for (discipler of getDisciplers(); track discipler) {
+          <button class="filter-btn" [class.active]="selectedDiscipler() === discipler" (click)="selectDiscipler(discipler)">
+            <span class="filter-avatar">
+              @if (getAvatarForDiscipler(discipler)) {
+                <img [src]="getAvatarForDiscipler(discipler)" [alt]="discipler" />
+              } @else {
+                {{ getInitials(discipler) }}
+              }
+            </span>
+            {{ discipler }}
+          </button>
+        }
+      </div>
+      
+      <div class="messages-list">
+        @for (message of filteredMessages(); track message.id) {
+          <div class="message-item" [class.selected]="selectedMessage()?.id === message.id" (click)="selectMessage(message)">
+            <div class="message-item-avatar">
+              @if (getAvatarForDiscipler(message.disciplerName)) {
+                <img [src]="getAvatarForDiscipler(message.disciplerName)" [alt]="message.disciplerName" />
+              } @else {
+                {{ getInitials(message.disciplerName) }}
+              }
+            </div>
+            <div class="message-item-body">
+              <div class="message-item-header">
+                <span class="message-item-title">{{ message.title }}</span>
+                <span class="message-item-date">{{ message.date | date:'MMM d, y' }}</span>
+              </div>
+              <div class="message-item-discipler">{{ message.disciplerName }}</div>
+              <div class="message-item-preview">{{ message.content | slice:0:60 }}...</div>
+            </div>
+          </div>
+        } @empty {
+          <div class="empty-state">No messages found</div>
+        }
+      </div>
+    </aside>
+    
+    <main class="content">
+      @if (selectedMessage(); as message) {
+        <article class="message-detail">
+          <header class="message-detail-header">
+            <div class="message-detail-author">
+              <div class="message-detail-avatar">
+                @if (getAvatarForDiscipler(message.disciplerName)) {
+                  <img [src]="getAvatarForDiscipler(message.disciplerName)" [alt]="message.disciplerName" />
+                } @else {
+                  {{ getInitials(message.disciplerName) }}
+                }
+              </div>
+              <div class="message-detail-author-info">
+                <h3>{{ message.title }}</h3>
+                <div class="message-detail-meta">
+                  <span class="message-detail-discipler">{{ message.disciplerName }}</span>
+                  <span class="message-detail-date">{{ message.date | date:'MMMM d, y' }}</span>
+                </div>
+              </div>
+            </div>
+          </header>
+          <div class="message-detail-content">
+            {{ message.content }}
+          </div>
+          <button class="btn btn-secondary" (click)="closeMessageDetail()">Back to List</button>
+        </article>
+      } @else {
+        <div class="welcome-message">
+          <h3>Welcome to Messages</h3>
+          <p>Select a message from the sidebar to read it, or filter by discipler using the buttons on the left.</p>
+          <p><strong>Glory Adekunle Opekun's messages</strong> are available - click her name in the filter to see them.</p>
+        </div>
+      }
+    </main>
+  </div>
+</div>

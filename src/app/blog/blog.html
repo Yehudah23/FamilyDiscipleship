@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="page-header">
+    <h2>Blog</h2>
+    <p class="subtitle">Read our latest articles and insights</p>
+  </div>
+  
+  <div class="blogs-grid">
+    @for (blog of blogs(); track blog.id) {
+      <article class="blog-card">
+        @if (blog.imageUrl) {
+          <div class="blog-image">
+            <img [src]="blog.imageUrl" [alt]="blog.title" />
+          </div>
+        }
+        <div class="blog-content">
+          <div class="blog-meta">
+            <span class="blog-author">{{ blog.author }}</span>
+            <span class="blog-date">{{ blog.date | date:'MMMM d, y' }}</span>
+          </div>
+          <h3 class="blog-title">{{ blog.title }}</h3>
+          <p class="blog-excerpt">{{ blog.content | slice:0:150 }}...</p>
+          <a routerLink="/blogs/{{ blog.id }}" class="read-more">Read More</a>
+        </div>
+      </article>
+    } @empty {
+      <div class="empty-state">
+        <p>No blog posts yet. Check back soon!</p>
+      </div>
+    }
+  </div>
+</div>

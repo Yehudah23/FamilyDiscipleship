@@ -1,0 +1,101 @@
+<section class="hero">
+  <div class="hero-background">
+    <div class="hero-overlay"></div>
+    <div class="hero-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+    </div>
+  </div>
+  
+  <div class="hero-content">
+    <div class="hero-text">
+      <span class="hero-badge">Family Discipleship Ministry</span>
+      <h1 class="hero-title">
+        Building Strong Families 
+        <span class="highlight">Through Faith</span>
+      </h1>
+      <p class="hero-description">
+        Join our community of disciplers dedicated to strengthening family bonds through biblical principles, 
+        meaningful fellowship, and spiritual growth. Together, we nurture faith that lasts generations.
+      </p>
+      <div class="hero-actions">
+        <a routerLink="/discplers" class="btn btn-primary btn-large">
+          <span>Meet Our Disciplers</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+        <a routerLink="/about" class="btn btn-secondary btn-large">
+          <span>About Our Ministry</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="16" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-number">{{ disciplersCount }}+</span>
+          <span class="stat-label">Dedicated Disciplers</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">{{ familiesServed }}</span>
+          <span class="stat-label">Families Served</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">{{ yearlyPrograms }}</span>
+          <span class="stat-label">Programs Yearly</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">{{ faithCentered }}</span>
+          <span class="stat-label">Faith-Centered</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="hero-visual">
+      <div class="hero-card-stack">
+        <div class="hero-card card-1">
+          <div class="card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h3>Family Fellowship</h3>
+          <p>Weekly gatherings for spiritual growth</p>
+        </div>
+        <div class="hero-card card-2">
+          <div class="card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          </div>
+          <h3>Youth Programs</h3>
+          <p>Engaging activities for next generation</p>
+        </div>
+        <div class="hero-card card-3">
+          <div class="card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            </svg>
+          </div>
+          <h3>Bible Studies</h3>
+          <p>Deep dive into God's Word together</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="hero-scroll">
+    <span>Scroll to explore</span>
+    <div class="scroll-indicator">
+      <div class="scroll-dot"></div>
+    </div>
+  </div>
+</section>
