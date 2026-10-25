@@ -48,7 +48,7 @@ export class Programs {
       time: '6:30 PM - 9:00 PM',
       location: 'Youth Center',
       type: 'youth',
-      leader: 'Pastor Shina',
+      leader: 'Pastor Adeshina peter Olayinka',
       capacity: 80,
       registered: 56
     },
@@ -120,7 +120,7 @@ export class Programs {
       time: 'Friday 6PM - Sunday 2PM',
       location: 'Mountain View Camp',
       type: 'youth',
-      leader: 'Pastor Shina',
+      leader: 'Pastor Adeshina peter Olayinka',
       capacity: 60,
       registered: 34
     }

@@ -52,7 +52,7 @@ export class MessageService {
     {
       id: 6,
       disciplerId: 4,
-      disciplerName: 'Pastor Shina',
+      disciplerName: 'Pastor Adeshina peter Olayinka',
       title: 'Youth Night: Identity in Christ',
       content: 'Join us as we explore what the Bible says about our identity in Christ. Open to all teens and young adults.',
       date: new Date('2026-02-10')

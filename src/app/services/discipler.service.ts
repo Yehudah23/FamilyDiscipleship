@@ -9,10 +9,10 @@ import { ADMIN_API_BASE_URL } from './admin-api.config';
 })
 export class DisciplerService {
   private disciplers = signal<Discipler[]>([
-    { id: 1, name: 'Glory Adekunle Opekun', email: 'glory@example.com', phone: '+234-801-234-5678', avatar: '/glory adekunle opekun/Glory Adekunle Opekun.jpeg' },
-    { id: 2, name: 'Pastor Simon poopola', email: 'simon@example.com', phone: '+234-802-345-6789', avatar: '/Popoola Simon.jpeg' },
-    { id: 3, name: 'Pastor Kehinde Ogunwole', email: 'kehinde@example.com', phone: '+234-803-456-7890', avatar: '/kehinde ogunwole.jpeg' },
-    { id: 4, name: 'Pastor Shina', email: 'shina@example.com', phone: '+234-804-567-8901', avatar: '/Adeshina.jpeg' }
+{ id: 1, name: 'Glory Adekunle Opekun', email: 'glory@example.com', phone: '07032893052', avatar: '/glory adekunle opekun/Glory Adekunle Opekun.jpeg' },
+{ id: 2, name: 'Pastor Simon poopola', email: 'simon@example.com', phone: '07064591445', avatar: '/Popoola Simon.jpeg' },
+{ id: 3, name: 'Pastor Kehinde Ogunwole', email: 'kehinde@example.com', phone: '08132764074', avatar: '/kehinde ogunwole.jpeg' },
+{ id: 4, name: 'Pastor Adeshina peter Olayinka', email: 'shina@example.com', phone: '08108281827', avatar: '/Adeshina.jpeg' }
   ]);
 
   constructor(private http: HttpClient) {
