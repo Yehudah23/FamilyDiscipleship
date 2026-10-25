@@ -56,6 +56,19 @@
   color: #94a3b8;
 }
 
+.footer-email {
+  display: inline-block;
+  margin-top: 1rem;
+  color: #bfdbfe;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.footer-email:hover {
+  color: var(--white);
+  text-decoration: underline;
+}
+
 .footer-links {
   display: flex;
   gap: 4rem;

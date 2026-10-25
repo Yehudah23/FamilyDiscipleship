@@ -1,0 +1,32 @@
+<main class="beliefs-page">
+  <header class="beliefs-hero">
+    <div class="container">
+      <span class="section-badge">The Meeting</span>
+      <h1>What We Believe</h1>
+      <p>Our nine articles of faith are grounded in the authority of Scripture and centred on the person and work of Jesus Christ.</p>
+    </div>
+  </header>
+
+  <section class="beliefs-content" aria-labelledby="articles-heading">
+    <div class="container">
+      <div class="intro-card">
+        <span class="eyebrow">A Scripture-centred foundation</span>
+        <h2 id="articles-heading">Nine Articles of Faith</h2>
+        <p>The Meeting exists to proclaim the gospel and help believers grow through the Word of God. These convictions guide our discipleship, witness, and service.</p>
+      </div>
+
+      <div class="articles-list">
+        @for (article of articles; track article.number) {
+          <article class="article-card">
+            <div class="article-number">{{ article.number }}</div>
+            <div class="article-body">
+              <h2>Article {{ article.number }}: {{ article.title }}</h2>
+              <p>{{ article.text }}</p>
+              <p class="references"><strong>Scriptural references:</strong> {{ article.references }}.</p>
+            </div>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+</main>

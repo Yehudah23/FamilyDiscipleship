@@ -11,7 +11,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
       <div class="navbar-container">
         <div class="navbar-brand">
           <img src="/logo.png" alt="Discipleship Logo" class="navbar-logo" />
-          <h1>Family Discipleship</h1>
+          <h1>The Meeting</h1>
         </div>
         
         <button class="menu-toggle" (click)="toggleMenu()" [class.active]="menuOpen" aria-label="Toggle menu">
@@ -25,6 +25,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
           <li><a routerLink="/discplers" routerLinkActive="active" (click)="closeMenu()">Disciplers</a></li>
           <li><a routerLink="/messages" routerLinkActive="active" (click)="closeMenu()">Messages</a></li>
           <li><a routerLink="/about" routerLinkActive="active" (click)="closeMenu()">About</a></li>
+          <li><a routerLink="/beliefs" routerLinkActive="active" (click)="closeMenu()">What We Believe</a></li>
           <li><a routerLink="/programs" routerLinkActive="active" (click)="closeMenu()">Programs</a></li>
           <li><a routerLink="/blogs" routerLinkActive="active" (click)="closeMenu()">Blogs</a></li>
           <li><a routerLink="/admin" routerLinkActive="active" (click)="closeMenu()">Admin</a></li>
