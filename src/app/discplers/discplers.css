@@ -169,7 +169,7 @@
   box-shadow: var(--shadow-xl);
   z-index: 100;
   overflow-y: auto;
-  max-height: 300px;
+  max-height: 500px;
   animation: dropdownFade 0.25s ease;
 }
 
