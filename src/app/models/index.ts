@@ -13,7 +13,7 @@ export interface Message {
   title: string;
   content: string;
   date: Date;
-  imageUrl?: string;
+  audioUrl?: string;
 }
 
 export interface Blog {

@@ -30,9 +30,10 @@ export class Admin {
     title: '',
     content: '',
     date: new Date(),
-    imageUrl: ''
+    imageUrl: '',
+    audioUrl: ''
   };
-  
+
   blogFormModel = {
     title: '',
     content: '',
@@ -109,6 +110,29 @@ export class Admin {
     }
   }
 
+  async onAudioSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    input.value = '';
+    if (!file) return;
+    if (!file.type.startsWith('audio/')) {
+      this.uploadMessage.set('Choose an audio file to upload.');
+      return;
+    }
+    this.uploadingImage.set(true);
+    this.uploadMessage.set('Uploading audio…');
+    try {
+      const url = await this.cloudinaryService.uploadAudio(file, 'messages');
+      this.messageFormModel.audioUrl = url;
+      this.uploadMessage.set('Audio uploaded successfully.');
+    } catch (error) {
+      console.error('Audio upload failed', error);
+      this.uploadMessage.set('Audio upload failed. Please try again.');
+    } finally {
+      this.uploadingImage.set(false);
+    }
+  }
+
   signOut() {
     this.logoutError.set('');
     this.authService.logout().subscribe({
@@ -132,8 +156,8 @@ export class Admin {
       title: form.title,
       content: form.content,
       date: form.date,
-      imageUrl: form.imageUrl || undefined
-    };
+      imageUrl: form.imageUrl || undefined,
+      audioUrl: form.audioUrl || undefined
     
     const request = this.editingMessage()
       ? this.messageService.updateMessage(this.editingMessage()!.id, messageData)
@@ -149,7 +173,8 @@ export class Admin {
       title: message.title,
       content: message.content,
       date: message.date,
-      imageUrl: message.imageUrl || ''
+      imageUrl: message.imageUrl || '',
+      audioUrl: message.audioUrl || ''
     };
     this.showMessageForm.set(true);
   }
@@ -172,11 +197,10 @@ export class Admin {
       title: '',
       content: '',
       date: new Date(),
-      imageUrl: ''
+      imageUrl: '',
+      audioUrl: ''
     };
   }
-  
-  // Blog handlers
   onAddBlog() {
     const form = this.blogFormModel;
     const blogData: Omit<Blog, 'id'> = {
