@@ -10,9 +10,9 @@ import { ADMIN_API_BASE_URL } from './admin-api.config';
 export class DisciplerService {
   private disciplers = signal<Discipler[]>([
 { id: 1, name: 'Glory Adekunle Opekun', email: 'gloryadekunleopekun@gmail.com', phone: '07032893052', avatar: '/glory adekunle opekun/Glory Adekunle Opekun.jpeg' },
-{ id: 2, name: 'Pastor Simon Poopola', email: 'simon@example.com', phone: '07064591445', avatar: '/Popoola Simon.jpeg' },
-{ id: 3, name: 'Pastor Kehinde Ogunwole', email: 'kehinde@example.com', phone: '08132764074', avatar: '/kehinde ogunwole.jpeg' },
-{ id: 4, name: 'Pastor Adeshina Peter Olayinka', email: 'shina@example.com', phone: '08108281827', avatar: '/Adeshina.jpeg' }
+{ id: 2, name: 'Pastor Simon Poopola', email: 'popoolasimon70@gmail.com', phone: '07064591445', avatar: '/Popoola Simon.jpeg' },
+{ id: 3, name: 'Pastor Kehinde Ogunwole', email: 'oluwafemikennyokayz@gmail.com', phone: '08132764074', avatar: '/kehinde ogunwole.jpeg' },
+{ id: 4, name: 'Pastor Adeshina Peter Olayinka', email: 'olayinkaadeshina170@gmail.com', phone: '08108281827', avatar: '/Adeshina.jpeg' }
   ]);
 
   constructor(private http: HttpClient) {
