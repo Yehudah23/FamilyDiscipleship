@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { DisciplerService } from '../services/discipler.service';
@@ -17,7 +17,7 @@ export class About {
   private messageService = inject(MessageService);
   private blogService = inject(BlogService);
 
-  disciplersCount = this.disciplerService.getDisciplers().length;
-  messageCount = this.messageService.getMessages().length;
-  blogCount = this.blogService.getBlogs().length;
+  disciplersCount = computed(() => this.disciplerService.getDisciplers().length);
+  messageCount = computed(() => this.messageService.getMessages().length);
+  blogCount = computed(() => this.blogService.getBlogs().length);
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { BlogService } from '../services/blog.service';
@@ -11,12 +11,8 @@ import { Blog as BlogModel } from '../models';
   templateUrl: './blog.html',
   styleUrl: './blog.css'
 })
-export class BlogComponent implements OnInit {
-  blogs = signal<BlogModel[]>([]);
-  
+export class BlogComponent {
+  blogs = computed(() => this.blogService.getBlogs());
+
   constructor(private blogService: BlogService) {}
-  
-  ngOnInit() {
-    this.blogs.set(this.blogService.getBlogs());
-  }
 }

@@ -1,0 +1,104 @@
+.login-page {
+  display: grid;
+  min-height: min(70vh, 620px);
+  place-items: center;
+  padding: 2rem 1rem;
+}
+
+.login-card {
+  width: min(100%, 410px);
+  padding: 2.25rem;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-xl);
+  background: var(--white);
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+
+.login-icon {
+  display: grid;
+  width: 3.25rem;
+  height: 3.25rem;
+  place-items: center;
+  margin: 0 auto 1rem;
+  border-radius: 1rem;
+  background: #eff6ff;
+  color: var(--navy);
+  font-size: 1.45rem;
+}
+
+.eyebrow {
+  color: var(--navy-light);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0.4rem 0;
+  color: var(--gray-900);
+  font-size: 1.65rem;
+}
+
+.login-card > p {
+  margin: 0 0 1.5rem;
+  color: var(--gray-500);
+  font-size: 0.9rem;
+}
+
+form {
+  display: grid;
+  gap: 0.6rem;
+  text-align: left;
+}
+
+label {
+  color: var(--gray-700);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+input {
+  width: 100%;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  background: var(--white);
+  color: var(--gray-900);
+  font: inherit;
+}
+
+input:focus-visible {
+  border-color: var(--navy);
+  outline: 3px solid rgba(59, 130, 246, 0.2);
+}
+
+button {
+  margin-top: 0.5rem;
+  padding: 0.8rem 1rem;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  color: var(--white);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.error-message {
+  margin: 0.2rem 0;
+  color: #b42318;
+  font-size: 0.82rem;
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 1.6rem;
+  }
+}

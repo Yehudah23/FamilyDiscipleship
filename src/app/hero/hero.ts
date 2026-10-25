@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DisciplerService } from '../services/discipler.service';
@@ -17,10 +17,10 @@ export class Hero {
   private messageService = inject(MessageService);
   private blogService = inject(BlogService);
 
-  disciplersCount = this.disciplerService.getDisciplers().length;
+  disciplersCount = computed(() => this.disciplerService.getDisciplers().length);
   familiesServed = '50+';
   yearlyPrograms = '12+';
   faithCentered = '100%';
-  messageCount = this.messageService.getMessages().length;
-  blogCount = this.blogService.getBlogs().length;
+  messageCount = computed(() => this.messageService.getMessages().length);
+  blogCount = computed(() => this.blogService.getBlogs().length);
 }

@@ -1,0 +1,26 @@
+<main class="login-page">
+  <section class="login-card" aria-labelledby="login-title">
+    <span class="login-icon" aria-hidden="true">✦</span>
+    <span class="eyebrow">Family Discipleship</span>
+    <h1 id="login-title">Admin sign in</h1>
+    <p>Enter your administrator password to continue.</p>
+
+    <form (ngSubmit)="onSubmit()">
+      <label for="admin-password">Password</label>
+      <input
+        id="admin-password"
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        autocomplete="current-password"
+        required
+        autofocus />
+      @if (errorMessage()) {
+        <p class="error-message" role="alert">{{ errorMessage() }}</p>
+      }
+      <button type="submit" [disabled]="!password || submitting()">
+        {{ submitting() ? 'Signing in…' : 'Continue' }}
+      </button>
+    </form>
+  </section>
+</main>

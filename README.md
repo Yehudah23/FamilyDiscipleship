@@ -4,56 +4,67 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 
 ## Development server
 
-To start a local development server, run:
+Install dependencies and create a local environment file:
 
 ```bash
-ng serve
+npm install
+cp .env.example .env
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+In `.env`, enter the Cloudinary cloud name, API key, and API secret from the
+Cloudinary Console. `ADMIN_PASSWORD=family` is configured for local
+development; replace it with a long, unique password before deployment.
+Replace `SESSION_SECRET` with a long random value as well. Never commit `.env`
+or expose `CLOUDINARY_API_SECRET` in Angular code.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Run the API and Angular app together:
 
 ```bash
-ng generate component component-name
+npm run dev
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
+Open `http://localhost:4300/`. The Angular dev server proxies `/api` requests
+to the Node.js server on port 3000. Check `http://localhost:3000/api/health`
+for missing server configuration.
 
 ## Building
 
-To build the project run:
-
 ```bash
-ng build
+npm run build
 ```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
 ## Running unit tests
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
 ```bash
-ng test
+npm test
 ```
 
-## Running end-to-end tests
+## Admin authentication and Cloudinary storage
 
-For end-to-end (e2e) testing, run:
+The Node API in `server/index.js` handles password-only admin login, signed
+Cloudinary image uploads, and the messages, blogs, and disciplers APIs. Admin
+sessions use an `HttpOnly`, `SameSite=Strict` cookie (also `Secure` in
+production), and write endpoints require that session.
 
-```bash
-ng e2e
-```
+This project stores content data as JSON raw assets in Cloudinary, in addition
+to storing uploaded images. This is a simple small-project setup, not a
+general-purpose database: Cloudinary raw assets are publicly deliverable, so
+store only content intended to be public. The server initializes the three
+JSON assets with the sample content on first read. Subsequent admin changes
+are saved back to Cloudinary.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Create a Cloudinary account and copy the cloud name, API key, and API secret
+from its Console into the matching `.env` variables. Keep the API secret on
+the server. The app uploads message images to `messages`, blog images to
+`blogs`, and profile photos to `discipler-avatars`. The Node API signs those
+uploads; the browser never receives the API secret.
+
+For deployment, run the Angular app and Node API behind HTTPS on the same
+origin (or proxy `/api` to the Node service). Set `NODE_ENV=production`, use a
+strong unique `ADMIN_PASSWORD` and `SESSION_SECRET`, and configure Cloudinary
+credentials in the hosting provider's secret/environment settings. Do not
+deploy the example password `family`.
 
 ## Additional Resources
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+For more information, see the [Angular CLI documentation](https://angular.dev/tools/cli).

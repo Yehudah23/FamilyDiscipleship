@@ -1,11 +1,23 @@
 <div class="container">
-  <h2>Admin Panel</h2>
+  <div class="admin-topbar">
+    <h2>Admin Panel</h2>
+    <button class="btn btn-secondary" type="button" (click)="signOut()">Sign out</button>
+  </div>
+  @if (logoutError()) {
+    <p class="upload-message error" role="alert">{{ logoutError() }}</p>
+  }
+  @if (operationError()) {
+    <p class="upload-message error" role="alert">{{ operationError() }}</p>
+  }
   
   <div class="admin-tabs">
     <button class="tab-btn" [class.active]="activeTab() === 'messages'" (click)="activeTab.set('messages')">Manage Messages</button>
     <button class="tab-btn" [class.active]="activeTab() === 'blogs'" (click)="activeTab.set('blogs')">Manage Blogs</button>
     <button class="tab-btn" [class.active]="activeTab() === 'disciplers'" (click)="activeTab.set('disciplers')">Manage Disciplers</button>
   </div>
+  @if (uploadMessage()) {
+    <p class="upload-message" role="status">{{ uploadMessage() }}</p>
+  }
   
   @if (activeTab() === 'messages') {
     <div class="admin-section">
@@ -38,6 +50,13 @@
             <div class="form-group">
               <label>Date</label>
               <input type="date" [(ngModel)]="messageFormModel.date" name="date">
+            </div>
+            <div class="form-group">
+              <label for="message-image">Image (optional)</label>
+              <input id="message-image" type="file" accept="image/*" (change)="onImageSelected($event, 'message')" [disabled]="uploadingImage()">
+              @if (messageFormModel.imageUrl) {
+                <img class="image-preview" [src]="messageFormModel.imageUrl" alt="Message attachment preview">
+              }
             </div>
             <div class="form-actions">
               <button type="submit" class="btn btn-primary" [disabled]="!messageForm.valid">
@@ -109,8 +128,11 @@
               <input type="date" [(ngModel)]="blogFormModel.date" name="date">
             </div>
             <div class="form-group">
-              <label>Image URL (optional)</label>
-              <input type="text" [(ngModel)]="blogFormModel.imageUrl" name="imageUrl" placeholder="https://example.com/image.jpg">
+              <label for="blog-image">Image (optional)</label>
+              <input id="blog-image" type="file" accept="image/*" (change)="onImageSelected($event, 'blog')" [disabled]="uploadingImage()">
+              @if (blogFormModel.imageUrl) {
+                <img class="image-preview" [src]="blogFormModel.imageUrl" alt="Blog image preview">
+              }
             </div>
             <div class="form-actions">
               <button type="submit" class="btn btn-primary" [disabled]="!blogForm.valid">
@@ -176,6 +198,13 @@
             <div class="form-group">
               <label>Phone *</label>
               <input type="text" [(ngModel)]="disciplerFormModel.phone" name="phone" required placeholder="+234-800-000-0000">
+            </div>
+            <div class="form-group">
+              <label for="discipler-avatar">Profile image (optional)</label>
+              <input id="discipler-avatar" type="file" accept="image/*" (change)="onImageSelected($event, 'discipler')" [disabled]="uploadingImage()">
+              @if (disciplerFormModel.avatar) {
+                <img class="image-preview avatar-preview" [src]="disciplerFormModel.avatar" alt="Discipler profile preview">
+              }
             </div>
             <div class="form-actions">
               <button type="submit" class="btn btn-primary" [disabled]="!disciplerForm.valid">

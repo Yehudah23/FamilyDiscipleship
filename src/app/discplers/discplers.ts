@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { DisciplerService } from '../services/discipler.service';
@@ -12,18 +12,14 @@ import { Discipler, Message } from '../models';
   templateUrl: './discplers.html',
   styleUrl: './discplers.css'
 })
-export class Discplers implements OnInit {
-  disciplers = signal<Discipler[]>([]);
+export class Discplers {
+  disciplers = computed(() => this.disciplerService.getDisciplers());
   openDropdown = signal<number | null>(null);
   
   constructor(
     private disciplerService: DisciplerService,
     private messageService: MessageService
   ) {}
-  
-  ngOnInit() {
-    this.disciplers.set(this.disciplerService.getDisciplers());
-  }
   
   getInitials(name: string): string {
     return name.split(' ').map(n => n[0]).join('').toUpperCase();

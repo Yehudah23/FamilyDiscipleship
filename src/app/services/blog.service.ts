@@ -1,5 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
+import { Observable, tap } from 'rxjs';
 import { Blog } from '../models';
+import { ADMIN_API_BASE_URL } from './admin-api.config';
 
 @Injectable({
   providedIn: 'root'
@@ -29,22 +32,42 @@ export class BlogService {
     }
   ]);
 
+  constructor(private http: HttpClient) {
+    this.http.get<Blog[]>(`${ADMIN_API_BASE_URL}/blogs`).subscribe({
+      next: blogs => this.blogs.set(blogs.map(blog => ({
+        ...blog,
+        date: new Date(blog.date)
+      }))),
+      error: error => console.error('Failed to load blogs from the API', error)
+    });
+  }
+
   getBlogs() {
     return this.blogs();
   }
 
-  addBlog(blog: Omit<Blog, 'id'>) {
-    const newId = Math.max(...this.blogs().map(b => b.id), 0) + 1;
-    this.blogs.update(list => [...list, { ...blog, id: newId }]);
+  addBlog(blog: Omit<Blog, 'id'>): Observable<Blog> {
+    return this.http.post<Blog>(`${ADMIN_API_BASE_URL}/blogs`, blog, {
+      withCredentials: true
+    }).pipe(tap(created => this.blogs.update(list => [
+      ...list,
+      { ...created, date: new Date(created.date) }
+    ])));
   }
 
-  updateBlog(id: number, blog: Partial<Blog>) {
-    this.blogs.update(list => 
-      list.map(b => b.id === id ? { ...b, ...blog } : b)
-    );
+  updateBlog(id: number, blog: Partial<Blog>): Observable<Blog> {
+    return this.http.put<Blog>(`${ADMIN_API_BASE_URL}/blogs/${id}`, blog, {
+      withCredentials: true
+    }).pipe(tap(updated => this.blogs.update(list => list.map(current =>
+      current.id === id
+        ? { ...updated, date: new Date(updated.date) }
+        : current
+    ))));
   }
 
-  deleteBlog(id: number) {
-    this.blogs.update(list => list.filter(b => b.id !== id));
+  deleteBlog(id: number): Observable<void> {
+    return this.http.delete<void>(`${ADMIN_API_BASE_URL}/blogs/${id}`, {
+      withCredentials: true
+    }).pipe(tap(() => this.blogs.update(list => list.filter(blog => blog.id !== id))));
   }
 }

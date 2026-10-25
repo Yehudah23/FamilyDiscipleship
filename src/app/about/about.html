@@ -48,7 +48,7 @@
           <h2>Our Story</h2>
           <div class="story-text">
             <p>Family Discipleship Ministry began in 2015 when a small group of families recognized a deep need in their community: parents wanted to disciple their children but didn't know where to start. What began as a weekly Bible study in a living room has grown into a thriving ministry serving over 50 families.</p>
-            <p>Today, our team of {{ disciplersCount }} dedicated disciplers provides structured programs, resources, and community support to help families build lasting spiritual foundations. We've seen marriages strengthened, children come to faith, and families develop rhythms of prayer and worship that transform their homes.</p>
+            <p>Today, our team of {{ disciplersCount() }} dedicated disciplers provides structured programs, resources, and community support to help families build lasting spiritual foundations. We've seen marriages strengthened, children come to faith, and families develop rhythms of prayer and worship that transform their homes.</p>
             <p>Our approach is simple but powerful: we walk alongside families, providing biblical teaching, practical tools, and authentic community. We don't just teach principles—we live them together.</p>
           </div>
           <a routerLink="/discplers" class="btn btn-primary">Meet Our Team</a>
@@ -66,11 +66,11 @@
               <p>Families Impacted</p>
             </div>
             <div class="story-stat">
-              <span class="counter">{{ messageCount }}</span>
+              <span class="counter">{{ messageCount() }}</span>
               <p>Messages Shared</p>
             </div>
             <div class="story-stat">
-              <span class="counter">{{ blogCount }}</span>
+              <span class="counter">{{ blogCount() }}</span>
               <p>Articles Published</p>
             </div>
           </div>

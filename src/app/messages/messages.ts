@@ -1,59 +1,53 @@
-import { Component, OnInit, signal } from '@angular/core';
-import { COMMONMODULE } from '@angular/common';
-import { Router } from '@angular/router';
+import { Component, computed, effect, OnInit, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { DisciplerService } from '../services/discipler.service';
 import { MessageService } from '../services/message.service';
-import { Discipler, Message } from '../models';
+import { Message } from '../models';
 
 @Component({
   selector: 'app-messages',
   standalone: true,
-  imports: [COMMONMODULE],
+  imports: [CommonModule],
   templateUrl: './messages.html',
   styleUrl: './messages.css'
 })
 export class Messages implements OnInit {
-  messages = signal<Message[]>([]);
-  filteredMessages = signal<Message[]>([]);
+  messages = computed(() => this.messageService.getMessages());
   selectedDiscipler = signal<string | null>(null);
   selectedMessage = signal<Message | null>(null);
+  private routeMessageId = signal<number | null>(null);
+  filteredMessages = computed(() => {
+    const discipler = this.selectedDiscipler();
+    return discipler
+      ? this.messages().filter(message => message.disciplerName === discipler)
+      : this.messages();
+  });
   
   constructor(
     private messageService: MessageService,
-    private route: Router,
+    private activatedRoute: ActivatedRoute,
     private disciplerService: DisciplerService
-  ) {}
-  
-  ngOnInit() {
-    this.messages.set(this.messageService.getMessages());
-    
-    this.route.queryParams.subscribe(params => {
-      if (params['discipler']) {
-        this.selectedDiscipler.set(params['discipler']);
-        this.filterMessages();
-      } else {
-        this.filteredMessages.set(this.messages());
-      }
-    });
-    
-    this.route.params.subscribe(params => {
-      if (params['id']) {
-        const message = this.messages().find(m => m.id === +params['id']);
-        if (message) {
-          this.selectedMessage.set(message);
-        }
-      }
+  ) {
+    effect(() => {
+      const id = this.routeMessageId();
+      const message = id ? this.messages().find(item => item.id === id) : undefined;
+      if (message) this.selectedMessage.set(message);
     });
   }
   
-  filterMessages() {
-    if (this.selectedDiscipler()) {
-      this.filteredMessages.set(
-        this.messages().filter(m => m.disciplerName === this.selectedDiscipler())
-      );
-    } else {
-      this.filteredMessages.set(this.messages());
-    }
+  ngOnInit() {
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (params['discipler']) {
+        this.selectedDiscipler.set(params['discipler']);
+      } else {
+        this.selectedDiscipler.set(null);
+      }
+    });
+    
+    this.activatedRoute.params.subscribe(params => {
+      this.routeMessageId.set(params['id'] ? Number(params['id']) : null);
+    });
   }
   
   getDisciplers(): string[] {
@@ -62,12 +56,10 @@ export class Messages implements OnInit {
   
   selectDiscipler(name: string) {
     this.selectedDiscipler.set(name);
-    this.filterMessages();
   }
-  
+
   clearFilter() {
     this.selectedDiscipler.set(null);
-    this.filteredMessages.set(this.messages());
   }
   
   selectMessage(message: Message) {
